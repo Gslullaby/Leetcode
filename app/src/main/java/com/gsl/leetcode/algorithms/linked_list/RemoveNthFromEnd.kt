@@ -6,7 +6,7 @@ package com.gsl.leetcode.algorithms.linked_list
  * Given linked list: 1->2->3->4->5, and n = 2.
  * After removing the second node from the end, the linked list becomes 1->2->3->5.
  *
- * 改题目的重点为
+ * 该题目的重点为
  * 1.如何倒序定位节点
  * 2.如何删除元素：删除一个节点，则必须要拿到该节点的前驱节点
  * 3.边界条件，如果要删除的是头节点，改如何处理，借助哑节点/判断null
