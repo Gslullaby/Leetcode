@@ -133,7 +133,7 @@ class MergeKSortedList {
      * 归并分合大法（递归实现）
      * 万万没想到，这方法效率这么高，哭了，这可是递归啊，220ms就跑完了
      *
-     * 时间复杂度:O(length * size)
+     * 时间复杂度:O(length * log(size))
      * 空间复杂度:O(size)
      */
     fun mergeKLists2(lists: Array<ListNode?>): ListNode? {
@@ -150,5 +150,41 @@ class MergeKSortedList {
                 mergeTwoSortedList(mergeKLists2(arr1), mergeKLists2(arr2))
             }
         }
+    }
+
+    /**
+     * 归并分合大法（非递归实现）
+     * 思路：数组中首尾链表依次合并，并将合并后的结果存储在数组的前半部分中，直至数组中只剩一个链表
+     * 1.声明变量right = size，right表示数组中真实的链表的个数，每遍历一遍right都会减半
+     * 2.开始while循环，循环的条件是right < 1
+     * 3.开始遍历数组，i从0至right/2
+     *      合并首尾两个链表，lists[i] = mergeTwoSortedList(lists[i], list[right-i])
+     * 4.遍历完成后，right = (right + 1) / 2
+     * 5.return lists[0]
+     *
+     * 该方法的难点在于每次合并完成后要正确的计算出right的值，
+     *      如果size为奇数，则进行一次遍历合并后right应该为 size / 2 + 1
+     *      如果size为偶数，则进行一次遍历合并后right应该为 size / 2
+     *      巧妙之处在于如果为偶数则 (size + 1) / 2 = size / 2 , 如果为奇数则(size + 1) / 2 = size / 2 + 1
+     *
+     * 要善于找到本质问题，然后在考虑如何解决!!!
+     * 时间复杂度:O(length * log(size))
+     * 空间复杂度:O(1)
+     */
+    fun mergeKLists3(lists: Array<ListNode?>): ListNode? {
+        if (lists.isEmpty())
+            return null
+        var right = lists.size
+        while (right > 1) {
+            for (i in 0 until right / 2) {
+                lists[i] = mergeTwoSortedList(lists[i], lists[right - i - 1])
+            }
+            right = (right + 1) / 2
+        }
+        return lists[0]
+    }
+
+    fun mergeKLists4(lists: Array<ListNode?>): ListNode? {
+        return null
     }
 }
